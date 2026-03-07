@@ -66,7 +66,7 @@ function callAnthropicAPI(text, mode) {
       : `Add prompt structure to this task description:\n\n${text}`;
 
     const body = JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 1024,
       system: systemPrompt,
       messages: [{ role: "user", content: userMessage }]

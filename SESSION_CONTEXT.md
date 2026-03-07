@@ -14,23 +14,27 @@ CLI tool + Claude Code slash command for cleaning voice-to-text output and addin
   - `--copy`: result to clipboard (pbcopy)
   - `--raw`: plain text, no formatting
 - `sharpen.md` — Claude Code slash command (`/sharpen`), runs inline within CC session (no API key needed)
-- `install.sh` — copies CLI to ~/.local/bin/sharpen, slash command to ~/.claude/commands/sharpen.md
+- `install.sh` — copies CLI to ~/.local/bin/sharpen, slash command to ~/.claude/commands/sharpen.md, adds aliases
 
 ## Installed Locations
 - CLI: ~/.local/bin/sharpen
 - Slash command: ~/.claude/commands/sharpen.md
-- PATH added to ~/.zshrc
-- ANTHROPIC_API_KEY added to ~/.zshrc
+- PATH + aliases in ~/.zshrc
+
+## Shell Aliases (in ~/.zshrc)
+- `sv` — voice full pipeline: clean + meta + clipboard
+- `sp` — prompt structure + clipboard
+- `sc` — clean only + clipboard
 
 ## Current Status (2026-03-07)
-- Fully installed and pushed to GitHub
-- Model: claude-haiku-4-5-20251001 (switched from Sonnet for cost)
-- README with workflow docs is live
-- Not yet tested end-to-end (need to run `source ~/.zshrc` first)
+- Fully installed, aliases live, pushed to GitHub
+- Model: claude-haiku-4-5-20251001
+- README rewritten 3x for maximum clarity — numbered steps, where-you-are labels
+- HOWTO.md deleted (was redundant with README)
+- Not yet tested end-to-end with actual Superwhisper input
 
 ## Files
 - sharpen.js — main CLI script
 - sharpen.md — CC slash command
-- install.sh — installer
-- HOWTO.md — original usage docs (kept for reference, README is the primary doc now)
-- README.md — GitHub-facing docs with workflows
+- install.sh — installer (includes alias setup)
+- README.md — step-by-step usage docs

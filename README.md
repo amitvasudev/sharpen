@@ -101,9 +101,15 @@ Claude sharpens it, shows you the result, and asks you to confirm before doing a
 
 ### It learns from your corrections
 
-If Claude's sharpened version isn't quite right and you tell it to adjust, it saves what it learned to `~/.claude/sharpen-prefs.md`. Next time you run `/sharpen` (or `sv`/`sp`/`sc`), those rules are applied automatically. Same mistakes don't repeat.
+**Step 1.** You run `/sharpen` and Claude shows you the sharpened version.
 
-The prefs file is on your machine only — it's never committed to the repo.
+**Step 2.** It's not quite right. You tell Claude what to change — e.g. "don't expand vague references, I know what I mean" or "too wordy, keep it shorter."
+
+**Step 3.** Claude fixes it AND saves the lesson to `~/.claude/sharpen-prefs.md` — a file on your machine (never in the repo).
+
+**Step 4.** Next time you run `/sharpen` (or `sv`/`sp`/`sc` in Terminal), that rule is applied automatically. Same mistake doesn't happen again.
+
+You never edit the prefs file yourself. It builds up over time from your corrections.
 
 ---
 

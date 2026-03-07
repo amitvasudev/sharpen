@@ -16,7 +16,11 @@
 
 const https = require("https");
 const readline = require("readline");
+const fs = require("fs");
+const path = require("path");
 const { execSync } = require("child_process");
+
+const PREFS_PATH = path.join(process.env.HOME || "", ".claude", "sharpen-prefs.md");
 
 const PROMPTS = {
   clean: `You are a transcription cleaner. Your input is raw voice-to-text output — rambling, with filler words, repeated ideas, and incomplete sentences. Your job is to reconstruct the actual intent into clean, readable prose.
@@ -60,7 +64,10 @@ function callAnthropicAPI(text, mode) {
       return;
     }
 
-    const systemPrompt = PROMPTS[mode];
+    let prefs = "";
+    try { prefs = fs.readFileSync(PREFS_PATH, "utf8").trim(); } catch (e) {}
+    const prefsBlock = prefs ? `\n\nUser preferences (apply these rules):\n${prefs}` : "";
+    const systemPrompt = PROMPTS[mode] + prefsBlock;
     const userMessage = mode === "clean"
       ? `Clean up this voice transcription:\n\n${text}`
       : `Add prompt structure to this task description:\n\n${text}`;

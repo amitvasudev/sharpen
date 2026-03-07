@@ -99,6 +99,12 @@ Type your rough idea right after `/sharpen`:
 
 Claude sharpens it, shows you the result, and asks you to confirm before doing anything. No Terminal needed. No clipboard. No API cost.
 
+### It learns from your corrections
+
+If Claude's sharpened version isn't quite right and you tell it to adjust, it saves what it learned to `~/.claude/sharpen-prefs.md`. Next time you run `/sharpen` (or `sv`/`sp`/`sc`), those rules are applied automatically. Same mistakes don't repeat.
+
+The prefs file is on your machine only — it's never committed to the repo.
+
 ---
 
 ## The three shortcuts

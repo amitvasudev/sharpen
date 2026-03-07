@@ -12,7 +12,10 @@ bash install.sh
 source ~/.zshrc
 ```
 
-That's it. You now have a `sharpen` command in Terminal and a `/sharpen` slash command in Claude Code.
+That's it. You now have:
+- `sharpen` command in Terminal
+- `/sharpen` slash command in Claude Code
+- Three two-letter shortcuts: `sv`, `sp`, `sc` (see below)
 
 Requirements: Node.js and `ANTHROPIC_API_KEY` in your `~/.zshrc`.
 
@@ -25,8 +28,10 @@ You dictated something with Superwhisper. It's on your clipboard now. You want t
 ### In Terminal, type:
 
 ```bash
-pbpaste | sharpen --clean | sharpen --meta --copy
+sv
 ```
+
+That's it. Two letters. It runs `pbpaste | sharpen --clean | sharpen --meta --copy` under the hood.
 
 What just happened:
 1. `pbpaste` — grabs your Superwhisper transcription from the clipboard
@@ -41,13 +46,9 @@ Cmd+V to paste. Send it. Done.
 ### Want to review between steps?
 
 ```bash
-# Step 1: clean the voice slop, result goes to clipboard
-pbpaste | sharpen --clean --copy
-
-# Read what's on your clipboard. Happy with it? Step 2:
-pbpaste | sharpen --meta --copy
-
-# Now paste into your LLM of choice.
+sc    # clean only, result to clipboard. Read it.
+sp    # happy with it? Add structure, result to clipboard.
+      # Now paste into your LLM of choice.
 ```
 
 ---
@@ -59,7 +60,7 @@ You typed something in a text editor or chat box. You copied it to your clipboar
 ### In Terminal, type:
 
 ```bash
-pbpaste | sharpen --meta --copy
+sp
 ```
 
 No `--clean` needed — your text isn't voice slop, it just needs structure.
@@ -101,12 +102,21 @@ No clipboard, no Terminal — this all happens inside Claude Code. No API key co
 | `--copy` | Put the result on your clipboard |
 | `--raw` | Plain text output, no formatting (for piping into other tools) |
 
+## Shortcuts
+
+| Shortcut | What it does | Long form |
+|---|---|---|
+| `sv` | Voice → clean + structure → clipboard | `pbpaste \| sharpen --clean \| sharpen --meta --copy` |
+| `sp` | Prompt → structure → clipboard | `pbpaste \| sharpen --meta --copy` |
+| `sc` | Voice → clean only → clipboard | `pbpaste \| sharpen --clean --copy` |
+| `/sharpen` | Sharpen inside Claude Code | (no alias needed) |
+
 ## Cheat sheet
 
-| You have... | In Terminal, run... | Then... |
+| You have... | Type... | Then... |
 |---|---|---|
-| Superwhisper transcription on clipboard | `pbpaste \| sharpen --clean \| sharpen --meta --copy` | Paste into any LLM |
-| Superwhisper, want to review first | `pbpaste \| sharpen --clean --copy` then `pbpaste \| sharpen --meta --copy` | Paste into any LLM |
-| A typed prompt on clipboard | `pbpaste \| sharpen --meta --copy` | Paste into any LLM |
-| A typed prompt, no clipboard | `sharpen --meta "your prompt here" --copy` | Paste into any LLM |
-| A rough idea in Claude Code | `/sharpen your rough idea here` | Claude handles it |
+| Superwhisper transcription on clipboard | `sv` | Paste into any LLM |
+| Superwhisper, want to review first | `sc` then `sp` | Paste into any LLM |
+| A typed prompt on clipboard | `sp` | Paste into any LLM |
+| A typed prompt, no clipboard | `sharpen --meta "your prompt" --copy` | Paste into any LLM |
+| A rough idea in Claude Code | `/sharpen your rough idea` | Claude handles it |

@@ -1,98 +1,112 @@
 # Sharpen
 
-Turn sloppy voice-to-text or loose prompts into precise, structured instructions. Two modes, three workflows.
-
-## Quick start
-
-```bash
-# Voice transcription (Superwhisper) -> clipboard -> any LLM
-pbpaste | sharpen --clean | sharpen --meta --copy
-# Paste into Claude web, Gemini, ChatGPT, whatever.
-
-# Already typed something coherent, just want prompt structure
-pbpaste | sharpen --meta --copy
-
-# Inside Claude Code (slash command)
-/sharpen refactor the auth module add error handling
-```
+Cleans up sloppy voice-to-text and adds prompt structure before you send it to any LLM.
 
 ## Install
 
+Open **Terminal** and run:
+
 ```bash
+cd ~/projects/sharpen
 bash install.sh
+source ~/.zshrc
 ```
 
-This puts the CLI at `~/.local/bin/sharpen` and the Claude Code slash command at `~/.claude/commands/sharpen.md`.
+That's it. You now have a `sharpen` command in Terminal and a `/sharpen` slash command in Claude Code.
 
-Requirements:
-- Node.js
-- `ANTHROPIC_API_KEY` in your environment
-- `~/.local/bin` in your `PATH`
+Requirements: Node.js and `ANTHROPIC_API_KEY` in your `~/.zshrc`.
 
-## The two modes
+---
 
-### `--clean` — Fix voice slop
+## Usage A: Voice-to-text (Superwhisper) into any LLM
 
-Strips filler words ("um", "like", "you know"), merges repeated ideas, reconstructs into coherent sentences. Nothing added that wasn't in the original.
+You dictated something with Superwhisper. It's on your clipboard now. You want to clean it up and send it to Claude web / Gemini / ChatGPT / whatever.
 
-### `--meta` — Add prompt structure
+### In Terminal, type:
 
-Takes coherent text and wraps it in a proper prompt: adds a role, output format instructions, and constraints. The metaprompt layer that gets better results from any LLM.
-
-## Workflows
-
-### 1. Superwhisper -> any LLM
-
-Superwhisper puts transcription on the clipboard. From there:
-
-**Step by step (until you trust it):**
-```bash
-pbpaste | sharpen --clean --copy
-# Review. If it looks right:
-pbpaste | sharpen --meta --copy
-# Paste into any LLM.
-```
-
-**Full pipeline (when you trust it):**
 ```bash
 pbpaste | sharpen --clean | sharpen --meta --copy
-# Paste into any LLM.
 ```
 
-### 2. Typed prompt -> any LLM
+What just happened:
+1. `pbpaste` — grabs your Superwhisper transcription from the clipboard
+2. `sharpen --clean` — strips the "um"s, "like"s, and repeated ideas
+3. `sharpen --meta` — wraps it in a proper prompt with role, format, and constraints
+4. `--copy` — puts the final result back on your clipboard
 
-You typed something coherent but want the metaprompt structure:
+### In your browser (Claude web, Gemini, ChatGPT, etc.):
+
+Cmd+V to paste. Send it. Done.
+
+### Want to review between steps?
+
 ```bash
+# Step 1: clean the voice slop, result goes to clipboard
+pbpaste | sharpen --clean --copy
+
+# Read what's on your clipboard. Happy with it? Step 2:
 pbpaste | sharpen --meta --copy
 
-# Or pass it inline:
+# Now paste into your LLM of choice.
+```
+
+---
+
+## Usage B: You typed a prompt, want to make it better
+
+You typed something in a text editor or chat box. You copied it to your clipboard (Cmd+C).
+
+### In Terminal, type:
+
+```bash
+pbpaste | sharpen --meta --copy
+```
+
+No `--clean` needed — your text isn't voice slop, it just needs structure.
+
+### Then paste (Cmd+V) into any LLM.
+
+### Or skip the clipboard entirely:
+
+```bash
 sharpen --meta "write a function that parses dates from messy strings" --copy
 ```
 
-### 3. Inside Claude Code
+You type the prompt right there in the Terminal command. Result goes to clipboard. Paste it wherever.
 
-For complex tasks mid-session, use the slash command:
+---
+
+## Usage C: Inside Claude Code
+
+You're in a Claude Code session and want to sharpen a rough idea before Claude executes it.
+
+### In Claude Code, type:
+
 ```
 /sharpen refactor the auth module add error handling
 ```
-Claude outputs the sharpened version, explains the key change, and asks you to confirm before executing.
+
+You type your rough idea right after `/sharpen`. Claude sharpens it, shows you the result, and asks for confirmation before doing anything.
+
+No clipboard, no Terminal — this all happens inside Claude Code. No API key cost either (it uses the Claude Code session).
+
+---
 
 ## Flags
 
 | Flag | What it does |
 |---|---|
-| `--clean` | Strip voice filler, reconstruct into coherent text |
-| `--meta` | Add role, output format, and constraints (metaprompt) |
-| `--copy` | Copy result to clipboard (macOS) |
-| `--raw` | Plain text output, no formatting (for piping) |
+| `--clean` | Fix voice slop (filler words, repeated ideas, fragments) |
+| `--meta` | Add prompt structure (role, format, constraints) |
+| `--copy` | Put the result on your clipboard |
+| `--raw` | Plain text output, no formatting (for piping into other tools) |
 
-## Quick reference
+## Cheat sheet
 
-| Command | What it does |
-|---|---|
-| `pbpaste \| sharpen --clean --copy` | Clean voice slop, result to clipboard |
-| `pbpaste \| sharpen --meta --copy` | Add prompt structure, result to clipboard |
-| `pbpaste \| sharpen --clean \| sharpen --meta --copy` | Both steps, result to clipboard |
-| `sharpen --clean "text"` | Clean inline text |
-| `sharpen --meta "text"` | Add structure to inline text |
-| `/sharpen rough idea` | In Claude Code: sharpen before executing |
+| You have... | In Terminal, run... | Then... |
+|---|---|---|
+| Superwhisper transcription on clipboard | `pbpaste \| sharpen --clean \| sharpen --meta --copy` | Paste into any LLM |
+| Superwhisper, want to review first | `pbpaste \| sharpen --clean --copy` then `pbpaste \| sharpen --meta --copy` | Paste into any LLM |
+| A typed prompt on clipboard | `pbpaste \| sharpen --meta --copy` | Paste into any LLM |
+| A typed prompt, no clipboard | `sharpen --meta "your prompt here" --copy` | Paste into any LLM |
+| A rough idea in Claude Code | `/sharpen your rough idea here` | Claude handles it |

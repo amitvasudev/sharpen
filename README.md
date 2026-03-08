@@ -105,7 +105,15 @@ Type your rough idea right after `/sharpen`:
 /sharpen refactor the auth module add error handling
 ```
 
-Claude sharpens it, shows you the result, and asks you to confirm before doing anything. No Terminal needed. No clipboard. No API cost.
+Claude sharpens it (cleans + adds structure), shows you the result, and asks you to confirm before doing anything. No Terminal needed. No clipboard. No API cost.
+
+### Just want to clean up voice slop? (no prompt structure)
+
+```
+/sharpen-clean my rambling voice transcription here
+```
+
+Same idea, but it only fixes the transcription — no role, format, or constraints added. Like `sc` in Terminal.
 
 ### It learns from your corrections
 
@@ -128,6 +136,8 @@ You never edit the prefs file yourself. It builds up over time from your correct
 | `sv` | Terminal | Grabs clipboard, cleans voice slop, adds prompt structure, result back to clipboard |
 | `sp` | Terminal | Grabs clipboard, adds prompt structure, result back to clipboard |
 | `sc` | Terminal | Grabs clipboard, cleans voice slop only, result back to clipboard |
+| `/sharpen` | Claude Code | Cleans + adds structure, inline |
+| `/sharpen-clean` | Claude Code | Cleans only, no structure, inline |
 | `/sharpen` | Claude Code | Sharpens inline, no clipboard involved |
 
 ## Reference: flags for the full `sharpen` command

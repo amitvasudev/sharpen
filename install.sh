@@ -15,7 +15,8 @@ echo "✓ CLI installed → ~/.local/bin/sharpen"
 # 2. Claude Code slash command
 mkdir -p "$HOME/.claude/commands"
 cp "$SCRIPT_DIR/sharpen.md" "$HOME/.claude/commands/sharpen.md"
-echo "✓ Slash command installed → ~/.claude/commands/sharpen.md"
+cp "$SCRIPT_DIR/sharpen-clean.md" "$HOME/.claude/commands/sharpen-clean.md"
+echo "✓ Slash commands installed → ~/.claude/commands/sharpen.md, sharpen-clean.md"
 
 # 3. Preferences file (user-local, never in repo)
 PREFS="$HOME/.claude/sharpen-prefs.md"

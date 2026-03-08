@@ -19,6 +19,14 @@ Done. You need Node.js and an `ANTHROPIC_API_KEY` in your `~/.zshrc`.
 
 ---
 
+## When to use sharpen vs just dictating
+
+Superwhisper types your transcription wherever your cursor is. If your cursor is in an LLM chat box, the text goes straight there — no sharpen needed.
+
+Use `sv` when the transcription is **rambling or complex**. Clean + structure gets noticeably better LLM output. For simple, clear asks, just dictate directly.
+
+---
+
 ## "I dictated something with Superwhisper"
 
 Superwhisper already put your transcription on the clipboard. Now:

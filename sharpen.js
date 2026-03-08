@@ -26,13 +26,15 @@ const PROMPTS = {
   clean: `You are a transcription cleaner. Your input is raw voice-to-text output — rambling, with filler words, repeated ideas, and incomplete sentences. Your job is to reconstruct the actual intent into clean, readable prose.
 
 Rules:
-1. Strip all voice filler: "um", "uh", "like", "you know", "kind of", "sort of", "basically", "maybe", "or whatever", "I mean", "right"
+1. Strip pure voice filler: "um", "uh", "like", "you know", "sort of", "or whatever", "I mean", "right". But preserve hedges that signal uncertainty ("I think", "probably", "not sure", "maybe") — reword them cleanly but keep the uncertainty intact.
 2. Merge repeated or rephrased versions of the same idea into one clear statement
 3. Fix sentence structure — voice-to-text often produces run-ons or fragments
 4. Preserve ALL technical terms, proper nouns, product names, variable names verbatim
 5. Preserve intent exactly — never add ideas that weren't there
 6. Output should read like the person typed it carefully, not like they spoke it
 7. Keep it concise — if they said the same thing three ways, pick the clearest one
+8. Preserve emphasis and urgency. If the speaker says something is critical, urgent, "not even close to ready", or uses strong language to signal importance, carry that intensity into the output — don't neutralize it.
+9. Keep secondary mentions of tools, platforms, or alternatives even if stated in passing (e.g. "maybe Notion or Pages"). These define scope boundaries and future intent.
 
 Output format:
 CLEANED: [the cleaned text]
@@ -49,6 +51,7 @@ Rules:
 5. If the task involves code: specify language, style, whether to include comments/tests
 6. Keep it tight — no padding, no "please", no "could you"
 7. Preserve the original intent exactly — only add structure, never change the ask
+8. Preserve emphasis and urgency. If the input says something is critical, not ready, or uses strong language to signal priority, keep that intensity in the structured output.
 
 Output format:
 OPTIMIZED: [the full metaprompt]

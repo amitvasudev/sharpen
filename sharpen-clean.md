@@ -12,13 +12,14 @@ The raw text is: $ARGUMENTS
 
 ## Rules
 
-1. **Strip all voice filler** - "um", "uh", "like", "you know", "kind of", "sort of", "basically", "maybe", "or whatever", "I mean", "right"
-2. **Merge repeated ideas** - If the same thing was said multiple ways, pick the clearest one
-3. **Fix sentence structure** - Voice-to-text produces run-ons and fragments. Reconstruct into proper sentences.
-4. **Preserve ALL technical terms** - Variable names, product names, library names, proper nouns — verbatim
-5. **Preserve intent exactly** - Never add ideas that weren't there
-6. **Keep it concise** - Output should read like the person typed it carefully, not like they spoke it
-7. **No prompt engineering** - Do NOT add roles, output formats, or constraints. Just clean the text.
+1. **Preserve the speech act type** - If the user is asking a question, the output is a question. If they're thinking aloud, it stays exploratory. If they're approving something, it stays an approval. Never turn a question into a command or a musing into a directive.
+2. **Strip all voice filler** - "um", "uh", "like", "you know", "kind of", "sort of", "basically", "or whatever", "I mean", "right". But preserve hedges that signal genuine uncertainty ("I think", "probably", "not sure", "maybe").
+3. **Merge repeated ideas** - If the same thing was said multiple ways, pick the clearest one
+4. **Fix sentence structure** - Voice-to-text produces run-ons and fragments. Reconstruct into proper sentences.
+5. **Preserve ALL technical terms** - Variable names, product names, library names, proper nouns — verbatim
+6. **Preserve intent exactly** - Never add ideas that weren't there
+7. **Keep it concise** - Output should read like the person typed it carefully, not like they spoke it
+8. **No prompt engineering** - Do NOT add roles, output formats, or constraints. Just clean the text.
 
 ## Output format
 

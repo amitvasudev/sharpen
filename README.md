@@ -115,6 +115,21 @@ Claude sharpens it (cleans + adds structure), shows you the result, and asks you
 
 Same idea, but it only fixes the transcription — no role, format, or constraints added. Like `sc` in Terminal.
 
+### Big task? Use `/sharpen-sub`
+
+For large tasks that would normally require a lot of back-and-forth (and blow up your context window), use `/sharpen-sub` instead:
+
+```
+/sharpen-sub add 8sleep data ingestion to the health platform, pull from their API, store in the same DB pattern as oura, filter to my side of the bed
+```
+
+It does everything `/sharpen` does, plus decomposes the research phase into parallel subagents. The output is a two-phase prompt:
+
+- **Phase 1**: Parallel subagents gather context (read files, check state, find patterns) — chosen dynamically based on your task
+- **Phase 2**: Execute the actual work with all research already loaded
+
+All subagent findings get written to `/tmp/` scratch files so they survive context compaction. The main thread stays lean.
+
 ### It learns from your corrections
 
 **Step 1.** You run `/sharpen` and Claude shows you the sharpened version.
@@ -138,7 +153,7 @@ You never edit the prefs file yourself. It builds up over time from your correct
 | `sc` | Terminal | Grabs clipboard, cleans voice slop only, result back to clipboard |
 | `/sharpen` | Claude Code | Cleans + adds structure, inline |
 | `/sharpen-clean` | Claude Code | Cleans only, no structure, inline |
-| `/sharpen` | Claude Code | Sharpens inline, no clipboard involved |
+| `/sharpen-sub` | Claude Code | Sharpens + adds subagent execution plan for big tasks |
 
 ## Reference: flags for the full `sharpen` command
 

@@ -16,7 +16,8 @@ echo "✓ CLI installed → ~/.local/bin/sharpen"
 mkdir -p "$HOME/.claude/commands"
 cp "$SCRIPT_DIR/sharpen.md" "$HOME/.claude/commands/sharpen.md"
 cp "$SCRIPT_DIR/sharpen-clean.md" "$HOME/.claude/commands/sharpen-clean.md"
-echo "✓ Slash commands installed → ~/.claude/commands/sharpen.md, sharpen-clean.md"
+cp "$SCRIPT_DIR/sharpen-sub.md" "$HOME/.claude/commands/sharpen-sub.md"
+echo "✓ Slash commands installed → ~/.claude/commands/sharpen.md, sharpen-clean.md, sharpen-sub.md"
 
 # 3. Preferences file (user-local, never in repo)
 PREFS="$HOME/.claude/sharpen-prefs.md"

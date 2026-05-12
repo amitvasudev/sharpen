@@ -15,7 +15,32 @@ bash install.sh
 source ~/.zshrc
 ```
 
-Done. You need Node.js and an `ANTHROPIC_API_KEY` in your `~/.zshrc`.
+You need Node.js. The installer will check for Ollama (local model runtime) and tell you what to do if it's missing.
+
+### Default: Claude Haiku 4.5 (cloud)
+
+Sharpen ships with **Claude Haiku 4.5** as the default for both modes. Best structured-output quality, ~1-2s response, costs around ~$0.002 per call (~$5-10/month at heavy daily use).
+
+### Optional: local Qwen 3 8B for private/free runs
+
+If you've installed Ollama and pulled `qwen3:8b`, you can opt into local model runs:
+
+```bash
+sharpen --clean --model qwen "..."         # local, free, ~1.2s
+SHARPEN_MODEL=qwen sv                       # local for this shell session
+```
+
+Note: Qwen 3 8B is good at `--clean` but materially weaker than Haiku at `--meta` (structured prompt generation). For the `sv` voice→structured pipeline, default Haiku gives noticeably better output.
+
+To set up local mode:
+
+```bash
+brew install ollama
+brew services start ollama
+ollama pull qwen3:8b   # ~5GB, one-time download
+```
+
+The cloud fallback needs `ANTHROPIC_API_KEY` in your `~/.zshrc`.
 
 ---
 
@@ -165,3 +190,27 @@ You don't need these if you use `sv`/`sp`/`sc`. They're for building custom pipe
 | `--meta` | Add prompt structure (role, format, constraints) |
 | `--copy` | Put the result on your clipboard |
 | `--raw` | Plain text output, no formatting (for piping) |
+| `--model <name>` | Pick model (e.g. `qwen`, `haiku`, `sonnet`). See `--list-models` |
+| `--list-models` | Show all configured models and where they run (local vs cloud) |
+
+### Model selection
+
+Sharpen ships with a registry of models. You can switch on the fly:
+
+```bash
+sharpen --clean --model haiku "some text"     # use cloud Haiku
+SHARPEN_MODEL=sonnet sp                       # use Sonnet for this shell session
+sharpen --list-models                         # see what's available
+```
+
+To add a new model: open `sharpen.js`, find the `MODELS` registry near the top, add an entry. No other code changes needed.
+
+### Privacy guarantee
+
+When `--model qwen` (or any local model) succeeds: **no data leaves your machine**.
+
+The only time data goes to the cloud is:
+1. You explicitly pick a cloud model (e.g. `--model haiku`)
+2. The local model fails and auto-falls back (you'll see a clear stderr warning when this happens)
+
+If you want **strict local-only** with no fallback, set `SHARPEN_MODEL=qwen` and ensure Ollama is always running — but note that if Ollama crashes, sharpen will error rather than silently use cloud.
